@@ -1,297 +1,347 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-body {
-  font-family: "Inter", sans-serif;
+@plugin "@tailwindcss/typography";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --color-primary-100: #fff1e6;
+  --color-primary-500: #ff7000;
+
+  --color-dark-100: #000000;
+  --color-dark-200: #0f1117;
+  --color-dark-300: #151821;
+  --color-dark-400: #212734;
+  --color-dark-500: #101012;
+
+  --color-light-400: #858ead;
+  --color-light-500: #7b8ec8;
+  --color-light-700: #dce3f1;
+  --color-light-800: #f4f6f8;
+  --color-light-850: #fdfdfd;
+  --color-light-900: #ffffff;
+
+  --color-link-100: #1da1f2;
+
+  --radius-2: 8px;
+  --radius-1_5: 6px;
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+
+  --shadow-light-100:
+    0px 12px 20px 0px rgba(184, 184, 184, 0.03),
+    0px 6px 12px 0px rgba(184, 184, 184, 0.02),
+    0px 2px 4px 0px rgba(184, 184, 184, 0.03);
+  --shadow-light-200: 10px 10px 20px 0px rgba(218, 213, 213, 0.1);
+  --shadow-light-300: -10px 10px 20px 0px rgba(218, 213, 213, 0.1);
+  --shadow-dark-100: 0px 2px 10px 0px rgba(46, 52, 56, 0.1);
+  --shadow-dark-200: 2px 0px 20px 0px rgba(39, 36, 36, 0.04);
+
+  --background-image-auth-dark: url("/images/auth-dark.png");
+  --background-image-auth-light: url("/images/auth-light.png");
+
+  --breakpoint-xs: 420px;
+
+  --font-inter: var(--font-inter);
+  --font-space-grotesk: var(--font-space-grotesk);
 }
 
-:root {
-  --radius: 8px;
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
 }
 
-@layer utilities {
-  .background-light850_dark100 {
-    @apply bg-light-850 dark:bg-dark-100;
-  }
-
-  .background-light900_dark200 {
-    @apply bg-light-900 dark:bg-dark-200;
-  }
-
-  .background-light900_dark300 {
-    @apply bg-light-900 dark:bg-dark-300;
-  }
-
-  .background-light800_darkgradient {
-    @apply bg-light-800 dark:dark-gradient;
-  }
-
-  .background-light800_dark400 {
-    @apply bg-light-800 dark:bg-dark-400 !important;
-  }
-
-  .background-light700_dark400 {
-    @apply bg-light-700 dark:bg-dark-400;
-  }
-
-  .background-light700_dark300 {
-    @apply bg-light-700 dark:bg-dark-300;
-  }
-
-  .background-light800_dark400 {
-    @apply bg-light-800 dark:bg-dark-400;
-  }
-
-  .background-light800_dark300 {
-    @apply bg-light-800 dark:bg-dark-300 !important;
-  }
-
-  .background-light800_dark200 {
-    @apply bg-light-800 dark:bg-dark-200;
-  }
-
-  .background-dark400_light900 {
-    @apply dark:bg-dark-400 bg-light-900 !important;
-  }
-
-  .text-dark100_light900 {
-    @apply text-dark-100 dark:text-light-900 !important;
-  }
-
-  .text-dark200_light900 {
-    @apply text-dark-200 dark:text-light-900;
-  }
-
-  .text-dark200_light800 {
-    @apply text-dark-200 dark:text-light-800 !important;
-  }
-
-  .text-dark300_light700 {
-    @apply text-dark-300 dark:text-light-700;
-  }
-
-  .text-dark400_light700 {
-    @apply text-dark-400 dark:text-light-700;
-  }
-
-  .text-dark500_light700 {
-    @apply text-dark-500 dark:text-light-700 !important;
-  }
-
-  .text-dark500_light500 {
-    @apply text-dark-500 dark:text-light-500;
-  }
-
-  .text-dark500_light400 {
-    @apply text-dark-500 dark:text-light-400;
-  }
-
-  .text-dark300_light900 {
-    @apply text-dark-300 dark:text-light-900 !important;
-  }
-
-  .text-dark400_light800 {
-    @apply text-dark-400 dark:text-light-800;
-  }
-
-  .text-light400_light500 {
-    @apply text-light-400 dark:text-light-500 !important;
-  }
-
-  .text-dark400_light500 {
-    @apply text-dark-400 dark:text-light-500;
-  }
-
-  .text-dark400_light900 {
-    @apply text-dark-400 dark:text-light-900 !important;
-  }
-
-  .text-light400_light500 {
-    @apply text-light-400 dark:text-light-500 !important;
-  }
-
-  .light-border {
-    @apply border-light-800 dark:border-dark-300;
-  }
-
-  .light-border-2 {
-    @apply border-light-700 dark:border-dark-400 !important;
-  }
-
-  .h1-bold {
-    @apply text-[30px] font-bold leading-[42px] tracking-tighter;
-  }
-
-  .h2-bold {
-    @apply text-[24px] font-bold leading-[31.2px];
-  }
-
-  .h2-semibold {
-    @apply text-[24px] font-semibold leading-[31.2px];
-  }
-
-  .h3-bold {
-    @apply text-[20px] font-bold leading-[26px];
-  }
-
-  .h3-semibold {
-    @apply text-[20px] font-semibold leading-[24.8px];
-  }
-
-  .base-medium {
-    @apply text-[18px] font-medium leading-[25.2px];
-  }
-
-  .base-semibold {
-    @apply text-[18px] font-semibold leading-[25.2px];
-  }
-
-  .base-bold {
-    @apply text-[18px] font-bold leading-[140%];
-  }
-
-  .paragraph-regular {
-    @apply text-[16px] font-normal leading-[22.4px];
-  }
-
-  .paragraph-medium {
-    @apply text-[16px] font-medium leading-[22.4px];
-  }
-
-  .paragraph-semibold {
-    @apply text-[16px] font-semibold leading-[20.8px];
-  }
-
-  .body-regular {
-    @apply text-[14px] font-normal leading-[19.6px];
-  }
-
-  .body-medium {
-    @apply text-[14px] font-medium leading-[18.2px];
-  }
-
-  .body-semibold {
-    @apply text-[14px] font-semibold leading-[18.2px];
-  }
-
-  .body-bold {
-    @apply text-[14px] font-bold leading-[18.2px];
-  }
-
-  .small-regular {
-    @apply text-[12px] font-normal leading-[15.6px];
-  }
-
-  .small-medium {
-    @apply text-[12px] font-medium leading-[15.6px];
-  }
-
-  .small-semibold {
-    @apply text-[12px] font-semibold leading-[15.6px];
-  }
-
-  .subtle-medium {
-    @apply text-[10px] font-medium leading-[13px] !important;
-  }
-
-  .subtle-regular {
-    @apply text-[10px] font-normal leading-[13px];
-  }
-
-  .placeholder {
-    @apply placeholder:text-light-400 dark:placeholder:text-light-500;
-  }
-
-  .invert-colors {
-    @apply invert dark:invert-0;
-  }
-
-  .shadow-light100_dark100 {
-    @apply shadow-light-100 dark:shadow-dark-100;
-  }
-
-  .shadow-light100_darknone {
-    @apply shadow-light-100 dark:shadow-none;
-  }
-
-  .primary-gradient {
-    background: linear-gradient(129deg, #ff7000 0%, #e2995f 100%);
-  }
-
-  .dark-gradient {
-    background: linear-gradient(
-      232deg,
-      rgba(23, 28, 35, 0.41) 0%,
-      rgba(19, 22, 28, 0.7) 100%
-    );
-  }
-
-  .light-gradient {
-    background: linear-gradient(
-      132deg,
-      rgba(247, 249, 255, 0.5) 0%,
-      rgba(229, 237, 255, 0.25) 100%
-    );
-  }
-
-  .primary-text-gradient {
-    background: linear-gradient(129deg, #ff7000 0%, #e2995f 100%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-
-  .flex-center {
-    @apply flex justify-center items-center;
-  }
-
-  .flex-between {
-    @apply flex justify-between items-center;
-  }
-
-  .flex-start {
-    @apply flex justify-start items-center;
-  }
-
-  .card-wrapper {
-    @apply bg-light-900 dark:dark-gradient shadow-light-100 dark:shadow-dark-100;
-  }
-
-  .btn {
-    @apply bg-light-800 dark:bg-dark-300 !important;
-  }
-
-  .btn-secondary {
-    @apply bg-light-800 dark:bg-dark-400 !important;
-  }
-
-  .btn-tertiary {
-    @apply bg-light-700 dark:bg-dark-300 !important;
-  }
-
-  .no-focus {
-    @apply focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0 !important;
-  }
-
-  .markdown {
-    @apply max-w-full prose prose-p:my-2 prose-ol:my-0 prose-ul:my-0 dark:prose-p:text-light-700 dark:prose-ol:text-light-700 dark:prose-ul:text-light-500 dark:prose-strong:text-white dark:prose-headings:text-white prose-headings:text-dark-400 prose-h1:text-dark-300 prose-h2:text-dark-300 prose-p:text-dark-500 prose-ul:text-dark-500 prose-ol:text-dark-500;
-  }
-
-  .markdown-editor {
-    @apply prose max-w-full prose-p:m-0 dark:prose-headings:text-white prose-headings:text-dark-400 prose-p:text-dark-500 dark:prose-p:text-light-700 prose-ul:text-dark-500 dark:prose-ul:text-light-700 prose-ol:text-dark-500 dark:prose-ol:text-light-700 dark:prose-strong:text-white prose-blockquote:text-dark-500 dark:prose-blockquote:text-light-700;
-  }
-
-  .tab {
-    @apply min-h-full dark:bg-dark-400 bg-light-800 text-light-500 dark:data-[state=active]:bg-dark-300 data-[state=active]:bg-primary-100 data-[state=active]:text-primary-500 !important;
-  }
-
-  .dark-gradient {
-    background: linear-gradient(
-      232deg,
-      rgba(23, 28, 35, 0.41) 0%,
-      rgba(19, 22, 28, 0.7) 100%
-    );
+@utility background-light850_dark100 {
+  @apply bg-light-850 dark:bg-dark-100;
+}
+
+@utility background-light900_dark200 {
+  @apply bg-light-900 dark:bg-dark-200;
+}
+
+@utility background-light900_dark300 {
+  @apply bg-light-900 dark:bg-dark-300;
+}
+
+@utility background-light800_darkgradient {
+  @apply bg-light-800 dark:dark-gradient;
+}
+
+@utility background-light800_dark400 {
+  @apply bg-light-800! dark:bg-dark-400!;
+  @apply bg-light-800 dark:bg-dark-400;
+}
+
+@utility background-light700_dark400 {
+  @apply bg-light-700 dark:bg-dark-400;
+}
+
+@utility background-light700_dark300 {
+  @apply bg-light-700 dark:bg-dark-300;
+}
+
+@utility background-light800_dark300 {
+  @apply bg-light-800! dark:bg-dark-300!;
+}
+
+@utility background-light800_dark200 {
+  @apply bg-light-800 dark:bg-dark-200;
+}
+
+@utility background-dark400_light900 {
+  @apply dark:bg-dark-400! bg-light-900!;
+}
+
+@utility text-dark100_light900 {
+  @apply text-dark-100! dark:text-light-900!;
+}
+
+@utility text-dark200_light900 {
+  @apply text-dark-200 dark:text-light-900;
+}
+
+@utility text-dark200_light800 {
+  @apply text-dark-200! dark:text-light-800!;
+}
+
+@utility text-dark300_light700 {
+  @apply text-dark-300 dark:text-light-700;
+}
+
+@utility text-dark400_light700 {
+  @apply text-dark-400 dark:text-light-700;
+}
+
+@utility text-dark500_light700 {
+  @apply text-dark-500! dark:text-light-700!;
+}
+
+@utility text-dark500_light500 {
+  @apply text-dark-500 dark:text-light-500;
+}
+
+@utility text-dark500_light400 {
+  @apply text-dark-500 dark:text-light-400;
+}
+
+@utility text-dark300_light900 {
+  @apply text-dark-300! dark:text-light-900!;
+}
+
+@utility text-dark400_light800 {
+  @apply text-dark-400 dark:text-light-800;
+}
+
+@utility text-light400_light500 {
+  @apply text-light-400! dark:text-light-500!;
+  @apply text-light-400! dark:text-light-500!;
+}
+
+@utility text-dark400_light500 {
+  @apply text-dark-400 dark:text-light-500;
+}
+
+@utility text-dark400_light900 {
+  @apply text-dark-400! dark:text-light-900!;
+}
+
+@utility light-border {
+  @apply border-light-800 dark:border-dark-300;
+}
+
+@utility light-border-2 {
+  @apply border-light-700! dark:border-dark-400!;
+}
+
+@utility h1-bold {
+  @apply text-[30px] font-bold leading-[42px] tracking-tighter;
+}
+
+@utility h2-bold {
+  @apply text-[24px] font-bold leading-[31.2px];
+}
+
+@utility h2-semibold {
+  @apply text-[24px] font-semibold leading-[31.2px];
+}
+
+@utility h3-bold {
+  @apply text-[20px] font-bold leading-[26px];
+}
+
+@utility h3-semibold {
+  @apply text-[20px] font-semibold leading-[24.8px];
+}
+
+@utility base-medium {
+  @apply text-[18px] font-medium leading-[25.2px];
+}
+
+@utility base-semibold {
+  @apply text-[18px] font-semibold leading-[25.2px];
+}
+
+@utility base-bold {
+  @apply text-[18px] font-bold leading-[140%];
+}
+
+@utility paragraph-regular {
+  @apply text-[16px] font-normal leading-[22.4px];
+}
+
+@utility paragraph-medium {
+  @apply text-[16px] font-medium leading-[22.4px];
+}
+
+@utility paragraph-semibold {
+  @apply text-[16px] font-semibold leading-[20.8px];
+}
+
+@utility body-regular {
+  @apply text-[14px] font-normal leading-[19.6px];
+}
+
+@utility body-medium {
+  @apply text-[14px] font-medium leading-[18.2px];
+}
+
+@utility body-semibold {
+  @apply text-[14px] font-semibold leading-[18.2px];
+}
+
+@utility body-bold {
+  @apply text-[14px] font-bold leading-[18.2px];
+}
+
+@utility small-regular {
+  @apply text-[12px] font-normal leading-[15.6px];
+}
+
+@utility small-medium {
+  @apply text-[12px] font-medium leading-[15.6px];
+}
+
+@utility small-semibold {
+  @apply text-[12px] font-semibold leading-[15.6px];
+}
+
+@utility subtle-medium {
+  @apply text-[10px]! font-medium! leading-[13px]!;
+}
+
+@utility subtle-regular {
+  @apply text-[10px] font-normal leading-[13px];
+}
+
+@utility placeholder {
+  @apply placeholder:text-light-400 dark:placeholder:text-light-500;
+}
+
+@utility invert-colors {
+  @apply invert dark:invert-0;
+}
+
+@utility shadow-light100_dark100 {
+  @apply shadow-light-100 dark:shadow-dark-100;
+}
+
+@utility shadow-light100_darknone {
+  @apply shadow-light-100 dark:shadow-none;
+}
+
+@utility primary-gradient {
+  background: linear-gradient(129deg, #ff7000 0%, #e2995f 100%);
+}
+
+@utility dark-gradient {
+  background: linear-gradient(
+    232deg,
+    rgba(23, 28, 35, 0.41) 0%,
+    rgba(19, 22, 28, 0.7) 100%
+  );
+  background: linear-gradient(
+    232deg,
+    rgba(23, 28, 35, 0.41) 0%,
+    rgba(19, 22, 28, 0.7) 100%
+  );
+}
+
+@utility light-gradient {
+  background: linear-gradient(
+    132deg,
+    rgba(247, 249, 255, 0.5) 0%,
+    rgba(229, 237, 255, 0.25) 100%
+  );
+}
+
+@utility primary-text-gradient {
+  background: linear-gradient(129deg, #ff7000 0%, #e2995f 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@utility flex-center {
+  @apply flex justify-center items-center;
+}
+
+@utility flex-between {
+  @apply flex justify-between items-center;
+}
+
+@utility flex-start {
+  @apply flex justify-start items-center;
+}
+
+@utility card-wrapper {
+  @apply bg-light-900 dark:dark-gradient shadow-light-100 dark:shadow-dark-100;
+}
+
+@utility btn {
+  @apply bg-light-800! dark:bg-dark-300!;
+}
+
+@utility btn-secondary {
+  @apply bg-light-800! dark:bg-dark-400!;
+}
+
+@utility btn-tertiary {
+  @apply bg-light-700! dark:bg-dark-300!;
+}
+
+@utility no-focus {
+  @apply focus-visible:ring-0! focus-visible:ring-transparent! focus-visible:ring-offset-0!;
+}
+
+@utility markdown {
+  @apply !max-w-full prose prose-p:my-2 prose-ol:my-0 prose-ul:my-0 dark:prose-p:text-light-700 dark:prose-ol:text-light-700 dark:prose-ul:text-light-500 dark:prose-strong:text-white dark:prose-headings:text-white prose-headings:text-dark-400 prose-h1:text-dark-300 prose-h2:text-dark-300 prose-p:text-dark-500 prose-ul:text-dark-500 prose-ol:text-dark-500;
+}
+
+@utility markdown-editor {
+  @apply prose !max-w-full prose-p:m-0 dark:prose-headings:text-white prose-headings:text-dark-400 prose-p:text-dark-500 dark:prose-p:text-light-700 prose-ul:text-dark-500 dark:prose-ul:text-light-700 prose-ol:text-dark-500 dark:prose-ol:text-light-700 dark:prose-strong:text-white prose-blockquote:text-dark-500 dark:prose-blockquote:text-light-700;
+}
+
+@utility tab {
+  @apply min-h-full! dark:bg-dark-400! bg-light-800! text-light-500! dark:data-[state=active]:bg-dark-300! data-[state=active]:bg-primary-100! data-[state=active]:text-primary-500!;
+}
+
+@layer base {
+  :root {
+    --radius: 0.5rem;
   }
 }
 
@@ -400,15 +450,9 @@ code {
   overflow-y: auto !important;
 }
 
-@layer base {
-  :root {
-    --radius: 0.5rem;
-  }
-}
-
 /* NESTED CODE BLOCKS: Only apply grid to visible code blocks */
 [data-bright-mode="dark"]:not(html.light [data-bright-mode="dark"]),
 [data-bright-mode="light"]:not(:not(html.light [data-bright-mode="light"])) {
-  display: grid !important; /* Apply grid only if it's visible */
+  display: grid !important;
   width: 100% !important;
 }
