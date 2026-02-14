@@ -1,4 +1,4 @@
-import { Schema, models, model, Types, Document } from "mongoose";
+import { Schema, models, model, Types, Document , HydratedDocument} from "mongoose";
 
 export interface IInteraction {
   user: Types.ObjectId;
@@ -18,7 +18,7 @@ export const InteractionActionEnums = [
   "search",
 ] as const;
 
-export interface IInteractionDoc extends IInteraction, Document {}
+export type IInteractionDoc = HydratedDocument<IInteraction>;
 const InteractionSchema = new Schema<IInteraction>(
   {
     user: { type: Schema.Types.ObjectId, ref: "User", required: true },
